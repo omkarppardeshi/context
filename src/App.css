@@ -1,6 +1,19 @@
 .App {
   text-align: center;
+  background-image: url("./gallery/back-grd.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh; /* So it covers full height */
 }
+
+/* Mobile background */
+@media screen and (max-width: 768px) {
+  .App {
+    background-image: url("./gallery/mobile-bg.png");
+    background-position: top;
+  }
+}
+
 
 .App-logo {
   height: 40vmin;

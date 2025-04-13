@@ -1,24 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect, useRef } from "react";
+import TodoContext from "./context/todoContext";
+import InputTodo from "./component/input";
+import "./App.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
+  const [tasks, setTasks] = useState([]);
+  const isFirstRender = useRef(true); // 👈 Track first render
+
+  useEffect(() => {
+    const stored = localStorage.getItem("To-Do");
+    if (stored) setTasks(JSON.parse(stored));
+  }, []);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return; // 🛑 Skip saving on first render
+    }
+    localStorage.setItem("To-Do", JSON.stringify(tasks));
+  }, [tasks]);
+
+  const addTodo = (task) => {
+    setTasks([...tasks, task]);
+  };
+
+  const deleteTodo = (index) => {
+    const updatedTasks = tasks.filter((_, i) => i !== index);
+    setTasks(updatedTasks);
+  };
+
+  const allRemove = () => {
+    setTasks([]);
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <TodoContext.Provider value={{ tasks, addTodo, deleteTodo, allRemove }}>
+      <div className="App">
+        <h1>To-Do App</h1>
+        <InputTodo />
+      </div>
+    </TodoContext.Provider>
   );
 }
 
