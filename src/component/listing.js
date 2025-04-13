@@ -8,7 +8,6 @@ import {
   Table,
   Button,
   CardHeader,
-  InputGroup,
   Input,
   FormGroup,
 } from "reactstrap";

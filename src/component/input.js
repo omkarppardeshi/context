@@ -14,7 +14,7 @@ import TodoContext from "../context/todoContext";
 import Listing from "./listing";
 
 function InputTodo() {
-  const { addTodo, tasks } = useContext(TodoContext);
+  const { addTodo } = useContext(TodoContext);
   const [inputValue, setInputValue] = useState("");
 
   const handleSubmit = (e) => {
